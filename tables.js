@@ -19,16 +19,26 @@ function Table (number){
 
     //User must be able to select a table from a list of inactive tables.
     this.selectTable = function (){
-        for(var i=0; i<inactiveTables.length; i++){
-            //Upon selection, the once inactive table will become active.
-            if (inactiveTables[i] === this.number) {
-                var index= inactiveTables.indexOf(this.number);
-                if(index> -1){
-                    inactiveTables.splice(index,1);
-                    activeTables.push(this.number);
-                }
-            }
+
+        //Upon selection, the once inactive table will become active.
+        var index= inactiveTables.indexOf(this.number); //indexOf not supported by IE8! use underscore?
+        if(index> -1){
+            inactiveTables.splice(index,1);
+            activeTables.push(this.number);
+        } else {
+            console.log('table is currently not inactive');
         }
+
+        //for(var i=0; i<inactiveTables.length; i++){
+        //    //Upon selection, the once inactive table will become active.
+        //    if (inactiveTables[i] === this.number) {
+        //        var index= inactiveTables.indexOf(this.number);
+        //        if(index> -1){
+        //            inactiveTables.splice(index,1);
+        //            activeTables.push(this.number);
+        //        }
+        //    }
+        //}
     };
 
 };
@@ -59,4 +69,6 @@ console.log(viewInactive());
 table2.selectTable();
 
 console.log(viewActive());
-console.log(viewInactive());
+console.log(viewInactive())
+
+table2.selectTable();
