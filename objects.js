@@ -157,61 +157,64 @@ function Test() {
 
 //Create an empty object called methodCollection.
 
-    //Code Here
+    this.methodCollection = {};
 
     /*Now add two methods (functions that are properties on objects) to your methodCollection
      object. One called 'alertHello' which alerts 'hello' and another method called logHello
      which logs 'hello' to the console. */
 
-    //Code Here
+    this.methodCollection.alertHello = function() {
+        alert("hello");
+    };
 
-//Now call your alertHello and logHello methods.
+    this.methodCollection.logHello = function(){
+        console.log("hello");
+    };
 
-    //Code Here
+    this.devMountainEmployees = [];
 
-
-//NEXT PROBLEM
-
-
-    var devMountainEmployees = [];
-
-    var tyler = {
+    this.tyler = {
         name: 'Tyler',
         position: 'Lead Instructor/Engineer',
         spiritAnimal: 'Honey Badger'
     };
 
-    var cahlan = {
+    this.cahlan = {
         name: 'Cahlan',
         position: 'CEO',
         spiritAnimal: 'butterfly'
     };
 
-    var ryan = {
+    this.ryan = {
         name: 'Ryan',
         position: 'Marketing',
         spiritAnimal: 'fox'
     };
 
-    var colt = {
+    this.colt = {
         name: 'Colt',
         position: 'Everything really',
         spiritAnimal: 'Young Male Horse'
-    }
+    };
 
     /*Above you're given an empty array with four objects. Fill the devMountainEmployees
      array with those four objects. After that console.log the length of the Array and make
      sure that it's equal to 4. */
 
-    //Code Here
+    this.devMountainEmployees = [this.tyler, this.cahlan, this.ryan, this.colt];
+
 
     /*Now let's say Cahlan has a mental breakdown and has to take a leave of absense to 'find himself'.
      Loop through your devMountainEmployees until you find cahlan, then remove him from the array.*/
 
-    //Code Here
-
-
-//NEXT PROBLEM
+    this.loopDev = function(){
+      for (var i=0; i < this.devMountainEmployees.length; i++){
+          if (this.devMountainEmployees[i].name === 'Cahlan'){
+              this.devMountainEmployees.splice(i,1);
+          }
+      }
+        return this.devMountainEmployees;
+    };
 
 
     /*Now we're going to combine what we've learned today (objects) with what we learned
@@ -221,7 +224,7 @@ function Test() {
      What they're really giving us is an Array full of Objects. It probably looks something
      like this. */
 
-    var data = [
+    this.data = [
         {
             artist: 'shakira',
             album: 'hips don\'t lie',
@@ -245,20 +248,20 @@ function Test() {
 
 //Create an empty array called users.
 
-    //Code Here
+    this.usersArray = [];
 
-    /*Now add three user objects to your users array. Each user object should contain the
-     following properties. name, email, password, username.*/
-
-//include this object as one of your indices in your array.
-    var user1 = {
+    //include this object as one of your indices in your array.
+    this.user3 = {
         name: 'Tyler McGinnis',
         email: 'tylermcginnis33@gmail.com',
         password: 'iLoveJavaScript',
         username: 'infiniateLoop'
-    }
+    };
 
-//Your Code Here
+    /*Now add three user objects to your users array. Each user object should contain the
+     following properties. name, email, password, username.*/
+    this.usersArray[0] = {name: "wee", email:"aha@gmail.com", password: "lol", username:"dahdah"};
+    this.usersArray[1] = this.user3;
 
     /*Now you have a very common data structure. Twitter is a good use case.
      It's easy to imagine that your followers list on Twitter is an Array full or objects
@@ -268,7 +271,14 @@ function Test() {
      objects until you find Tyler's account (use tylermcginnis33@gmail.com to find him).
      Once you find the particular indice he's located in, delete him from the array.*/
 
-    //Code Here
+    this.loopArray = function(){
+      for (var i=0; i < this.usersArray.length; i++){
+          if(this.usersArray[i].email === "tylermcginnis33@gmail.com"){
+              this.usersArray.splice(i,1);
+          }
+      }
+        return this.usersArray;
+    };
 
 //The activity we just did is very much how data works in 'the real world'.
 
@@ -289,4 +299,13 @@ var t = new Test();
 //console.log(t.removeUntruthy());
 //console.log(t.loopAndChange(t.removeUntruthy()));
 
-t.user2.sayName();
+//t.user2.sayName();
+
+//t.methodcollection.alertHello();
+//t.methodcollection.consoleHello();
+
+//console.log(t.devMountainEmployees.length);
+
+//console.log(t.loopDev());
+
+//console.log(t.loopArray());
