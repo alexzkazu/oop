@@ -46,7 +46,7 @@ function Test() {
      Now using dot notation add a key (or property) to your backPack object that is named color,
      with the value being the color of your backpack. */
 
-    this.backPack = {};
+    this.backPack = { item: "firstPocket" };
     this.backPack.item = "chapstick";
     this.backPack.color = "red";
 
@@ -71,55 +71,73 @@ function Test() {
         }
     };
 
-//NEXT PROBLEM
-
-
 //Create an Object called 'album' with 5 keys named different song titles that you make up, with the values being the length of each song.
 
-    //Code Here
+    this.album = {
+        idontknow: "3:00",
+        hehehe: "4:00",
+        haha: "300"
+    };
 
 //Now, loop through your album object alerting every song title individually.
 
-    //Code Here
-
-
-//NEXT PROBLEM
-
+    this.loopAlbum = function() {
+      for (var a in this.album){
+          console.log(a);
+      }
+    };
 
 //Create an object called states that has 5 US states as properties with the values being their population (doesn't have to be accurate).
 
-    //Code Here
+    this.states = {
+        california: 22223224224,
+        nevada: 232323423242,
+        florida: 23232323,
+        newyork: 2323231323323,
+        montana: 33
+    };
 
 //Now, loop through your states object and if the states population is greater than 30K, alert that state.
 
-    //Code Here
+    this.loopStates = function(){
+        for (var v in this.states){
+            if(this.states[v] > 30000) {
+                console.log(v);
+            }
+        }
+    };
 
-
-//NEXT PROBLEM
-
-
-    var user = {
+    this.user2 = {
         name: 'Tyler McGinnis',
         email: null,
         pwHash: 'U+Ldlngx2BYQk',
         birthday: undefined,
         username: 'tylermcginnis33',
         age: 0
-    }
+    };
     /*Above you're given a user object. Loop through the user object checking to make sure
      that each value is truthy. If it's not truthy, remove it from the object. */
 
-    //Code Here
+    this.removeUntruthy = function(){
+        for(var a in this.user2){
+            if (!this.user2[a]) {
+                //console.log(this.user2[a]);
+                delete this.user2[a];
+            }
+        }
+    return this.user2;
+    };
 
 //Once you get your truthy Object, Change the remaining values in the object to be specific to you (name: 'your name', username: 'your username'), rather than my information.
 
-    //Code Here
+    this.loopAndChange = function(result){
+        result.name = "Alex";
+        result.pwHash = "daklwdkaw;;daw;d";
+        result.username = "moomoofarm";
+        return result;
+    };
 
-
-//NEXT PROBLEM
-
-
-    var user = {
+    this.user2 = {
         name: 'Tyler McGinnis',
         age: 24,
         pwHash: 'U+Ldlngx2BYQk',
@@ -127,21 +145,15 @@ function Test() {
         birthday: '05/02/1990',
         username: 'tylermcginnis33',
         sayName: function () {
-            alert('Email is : ' + this.email);
+            console.log('Email is : ' + this.email);
         }
     };
+
 //Let's say I, the user, decided to change my name and email address to the following
 // name -> 'Tyler S. McGinnis', email -> 'tyler.mcginnis@devmounta.in'. Make that change.
 
-    //Code Here
-
-//Now call the sayName method that's on the user object which will alert the users email
-
-    //Code Here
-
-
-//NEXT PROBLEM
-
+    this.user2.name = "Tyler S. McGinnis";
+    this.user2.email = "tyler.mcginnis@devmounta.in";
 
 //Create an empty object called methodCollection.
 
@@ -270,6 +282,11 @@ var t = new Test();
 
 //t.loopObject();
 
+//t.loopAlbum();
 
+//t.loopStates();
 
+//console.log(t.removeUntruthy());
+//console.log(t.loopAndChange(t.removeUntruthy()));
 
+t.user2.sayName();
