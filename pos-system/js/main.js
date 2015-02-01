@@ -1,3 +1,6 @@
+$(document).ready(function(){
+
+
 function Product(){
     this.name='';
     this.price=0.00;
@@ -50,3 +53,12 @@ soda.editProduct('Dr.Pepper','price',900);
 sodaList = soda.update();
 
 console.log(sodaList);
+
+$('#submitProduct').on('click',function(){
+
+    water.addProduct($('#productName').val(),$('#productPrice').val());
+    waterList = water.update();
+    console.log(waterList);
+});
+
+});
