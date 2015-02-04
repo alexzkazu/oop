@@ -1,16 +1,34 @@
-//$(document).ready(function(){
+Parse.initialize("3R7g0eCMyAs7NPiffHdkxq3sBHfteRQulMBNEOFI", "bQpE1wxSXDuUxuJhaftt4WDWUx3FACW13YabO4o7");
+
+    var TestObject = Parse.Object.extend("TestObject");
+    var testObject = new TestObject();
+    testObject.save({foo: "bar"}, {
+        sucess: function(object){
+            console.log('worked');
+            $('.sucess').show();
+        },
+        error: function(model,error){
+            console.log('faaaail');
+            $('.error').show();
+        }
+
+    });
+
+$(document).ready(function(){
 
 function Product(){
     this.name='';
     this.price=0.00;
+    this.description='';
 }
 
 function Collection(list_category){
     var temp=list_category; //saves the category (array?) being passed into temp
-    this.addProduct=function(name, price){ // method
+    this.addProduct=function(name, price, description){ // method
         var product = new Product(); //creates a new instance of product, saves it to product
         product.name = name; // takes the new instance, and saves name/price to the object
         product.price = price;
+        product.description = description;
         temp.push(product); //object is pushed into the list
     };
     this.removeProduct=function(name){
@@ -33,12 +51,19 @@ function Collection(list_category){
 }
 
 function Inventory(list_inventory) {
-    this.addCollection = function(major, type, array){
-        list_inventory[major][type] = array;
+    this.addCollection = function(type, array){
+        list_inventory[type] = array;
     };
-    this.searchCollection = function(type){
-        return list_inventory[type];
-    }
+    this.searchCollection = function(name){
+        for (var a in collectionList) {
+            for (var b = 0; b < collectionList[a].length; b++){
+                if(collectionList[a][b].name === name){
+                    return collectionList[a][b];
+                }
+            }
+        }
+        // return list_inventory[type];
+    };
     this.removeCollection = function(type){
         delete list_inventory[type]
     };
@@ -46,17 +71,17 @@ function Inventory(list_inventory) {
 
 var waterList=[];
 var sodaList = [];
-var appleList = [];
+var electronicsList = [];
 
 
 //var options = ["Beverages","Electronics"]
 
-var collectionList = { beverages: {}, electronics: {}};
+var collectionList = {};
 
 var water= new Collection(waterList);
-water.addProduct('Crystal Geiser', 2.00);
-water.addProduct('Agua Florida', 2.00);
-water.addProduct('Mineral Yums', 2.00);
+water.addProduct('Crystal Geiser', 2.00,'Crystal clear water. Lovely.');
+water.addProduct('Agua Florida', 2.00, 'Water from Florida. Yum.');
+water.addProduct('Mineral Yums', 2.00, "Yummy mineral water.");
 water.removeProduct('Mineral Yums');
 water.editProduct('Agua Florida','price',10.00);
 waterList = water.updateCategory();
@@ -64,24 +89,23 @@ waterList = water.updateCategory();
 
 //create soda collection
 var soda= new Collection(sodaList);
-soda.addProduct('Sprite',1.50);
-soda.addProduct('Dr.Pepper',1.50);
-soda.editProduct('Dr.Pepper','price',900);
+soda.addProduct('Sprite',1.50,'Mmm sprite.');
+soda.editProduct('Sprite','price',900);
 sodaList = soda.updateCategory();
 
-//create apple collection
-var apple = new Collection(appleList);
-apple.addProduct('iPod',199.99);
-apple.addProduct('MacBook Pro',2000.00);
-appleList = apple.updateCategory();
+//create electronics collection
+var electronics = new Collection(electronicsList);
+electronics.addProduct('iPod',199.99,'Nice.');
+electronics.addProduct('Macbook Pro',2000.00, 'Wow look at that. Shiny.');
+electronicsList = electronics.updateCategory();
 
 //console.log(sodaList);
 
 //instantiate frys from inventory const
 var frys = new Inventory(collectionList);
-frys.addCollection('beverages','water',waterList);
-frys.addCollection('beverages','soda',sodaList);
-frys.addCollection('electronics','apple',appleList);
+frys.addCollection('water',waterList);
+frys.addCollection('soda',sodaList);
+frys.addCollection('electronics',electronicsList);
 
 console.log(collectionList);
 
@@ -117,18 +141,14 @@ function Customer(){
     this.products = [];
     this.addProduct = function(name,collection){
         for (var a in collection){
-            //console.log(a);
             for (var b in collection[a]) {
                 for (var i=0;i<collection[a][b].length; i++){
                     if (collection[a][b][i].name === name) {
-                        console.log('yep');
                         this.products.push(collection[a][b][i]);
                     }
-                    console.log(collection[a][b][i]);
                 }
             }
         }
-        console.log(this.products);
     }
 }
 
@@ -142,13 +162,56 @@ cust1.addProduct("Crystal Geiser", collectionList);
 
 
 
-//
+// Product Selection //
 
-//$('#submitProduct').on('click',function(){
-//
-//    water.addProduct($('#productName').val(),$('#productPrice').val());
-//    waterList = water.update();
+$('a.list-product').on('click',function(){
+    var title = $(this).text();
+    var result = frys.searchCollection(title);
+    
+    console.log(result);
+
+    $('#products-intro').css({'display':'none'});
+
+    $('#product-info').find('h2').text(result.name);
+    $('#product-info').find('.price').text(result.price);
+    $('#product-info').find('.description').text(result.description);
+    $('#product-info').css({'display':'block'});
+
+});
+
+
+// $('.searchButton').on('click',function(){
+//     var opt = $('.searchSelect').val();
+//     var opt2 = $('.searchSelect2').val();
+//     var inp = $('.searchInput').val();
+
+//    // water.addProduct($('#productName').val(),$('#productPrice').val());
+//    // waterList = water.update();
 //    console.log(waterList);
-//});
+//    console.log(frys.searchCollection('beverages'));
+// });
 
-//});
+// $('.createUser').on('click',function(){
+
+//     var UserObject = Parse.Object.extend("UserObject");
+//     var userObject = new UserObject();
+
+//     var name = $('.name').val();
+//     var username = $('.username').val();
+//     var email = $('.email').val();
+//     var password = $('.password').val();
+
+//     userObject.save({ name: name, username: username, email:email, password:password }, {
+//         sucess: function(object){
+//             console.log('worked');
+//             $('.sucess').show();
+//         },
+//         error: function(model,error){
+//             console.log('faaaail');
+//             $('.error').show();
+//         }
+
+//     });
+// });
+
+});
